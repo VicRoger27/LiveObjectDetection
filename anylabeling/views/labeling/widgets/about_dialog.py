@@ -47,16 +47,14 @@ class AboutDialog(QDialog):
     _copy_info_ready = pyqtSignal(str)
     _bg_update_ready = pyqtSignal(dict)
 
-    email_address = "cv_hub@163.com"
-    website_url = "https://xanylabeling.com"
-    discord_url = (
-        "https://discord.com/channels/1350265627142651994/1350265628832829514"
-    )
-    twitter_url = "https://x.com/xanylabeling"
-    github_url = "https://github.com/CVHub520/X-AnyLabeling"
-    github_issues_url = "https://github.com/CVHub520/X-AnyLabeling/issues"
+    email_address = ""
+    website_url = "https://github.com/VicRoger27/LiveObjectDetection"
+    discord_url = ""
+    twitter_url = ""
+    github_url = "https://github.com/VicRoger27/LiveObjectDetection"
+    github_issues_url = "https://github.com/VicRoger27/LiveObjectDetection/issues"
     changelog_url = (
-        "https://github.com/CVHub520/X-AnyLabeling/tree/main/CHANGELOG.md"
+        "https://github.com/VicRoger27/LiveObjectDetection/blob/main/README.md"
     )
 
     def __init__(self, parent=None):
@@ -119,7 +117,7 @@ class AboutDialog(QDialog):
         layout.setSpacing(16)
 
         # App name and version
-        title_label = QLabel(f"<b>X-AnyLabeling</b> v{__version__}")
+        title_label = QLabel(f"<b>{__appname__}</b> v{__version__}")
         title_label.setStyleSheet("font-size: 16px;")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title_label)

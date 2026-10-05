@@ -5,10 +5,10 @@
 !include "FileFunc.nsh"
 
 ; General Definitions
-!define PRODUCT_NAME "Live Object Detection & Auto-Labeling Suite"
-!define PRODUCT_VERSION "3.0.0"
-!define PRODUCT_PUBLISHER "AI Vision Group"
-!define PRODUCT_WEB_SITE "https://github.com/CVHub520/X-AnyLabeling"
+!define PRODUCT_NAME "Live Object Detection"
+!define PRODUCT_VERSION "1.0.0"
+!define PRODUCT_PUBLISHER "LiveObjectDetection"
+!define PRODUCT_WEB_SITE "https://github.com/VicRoger27/LiveObjectDetection"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\LiveAnyLabeling.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKCU"

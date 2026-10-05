@@ -3949,6 +3949,99 @@ class Canvas(
             )
         painter.restore()
 
+    def _paint_empty_state_hud(self):
+        painter = QtGui.QPainter(self)
+        painter.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
+
+        w = self.width()
+        h = self.height()
+        if w < 100 or h < 100:
+            painter.end()
+            return
+
+        # Dark sleek background gradient
+        grad = QtGui.QLinearGradient(0, 0, w, h)
+        grad.setColorAt(0.0, QtGui.QColor(15, 23, 42))
+        grad.setColorAt(1.0, QtGui.QColor(30, 41, 59))
+        painter.fillRect(0, 0, w, h, grad)
+
+        # Center card dimensions
+        card_w = min(620, int(w * 0.88))
+        card_h = min(360, int(h * 0.88))
+        card_x = (w - card_w) // 2
+        card_y = (h - card_h) // 2
+        card_rect = QtCore.QRectF(card_x, card_y, card_w, card_h)
+
+        # Card glass background
+        painter.setBrush(QtGui.QColor(24, 32, 47, 210))
+        painter.setPen(QtGui.QPen(QtGui.QColor(56, 189, 248, 120), 1.5))
+        painter.drawRoundedRect(card_rect, 16, 16)
+
+        # Reticle / target corner accents
+        acc_len = 24
+        acc_pen = QtGui.QPen(QtGui.QColor(16, 185, 129), 2.5)
+        painter.setPen(acc_pen)
+        # Top-left
+        painter.drawLine(QtCore.QPointF(card_x + 8, card_y + 8), QtCore.QPointF(card_x + 8 + acc_len, card_y + 8))
+        painter.drawLine(QtCore.QPointF(card_x + 8, card_y + 8), QtCore.QPointF(card_x + 8, card_y + 8 + acc_len))
+        # Top-right
+        painter.drawLine(QtCore.QPointF(card_x + card_w - 8, card_y + 8), QtCore.QPointF(card_x + card_w - 8 - acc_len, card_y + 8))
+        painter.drawLine(QtCore.QPointF(card_x + card_w - 8, card_y + 8), QtCore.QPointF(card_x + card_w - 8, card_y + 8 + acc_len))
+        # Bottom-left
+        painter.drawLine(QtCore.QPointF(card_x + 8, card_y + card_h - 8), QtCore.QPointF(card_x + 8 + acc_len, card_y + card_h - 8))
+        painter.drawLine(QtCore.QPointF(card_x + 8, card_y + card_h - 8), QtCore.QPointF(card_x + 8, card_y + card_h - 8 - acc_len))
+        # Bottom-right
+        painter.drawLine(QtCore.QPointF(card_x + card_w - 8, card_y + card_h - 8), QtCore.QPointF(card_x + card_w - 8 - acc_len, card_y + card_h - 8))
+        painter.drawLine(QtCore.QPointF(card_x + card_w - 8, card_y + card_h - 8), QtCore.QPointF(card_x + card_w - 8, card_y + card_h - 8 - acc_len))
+
+        # Title
+        title_font = QtGui.QFont("Segoe UI", 18, QtGui.QFont.Weight.Bold)
+        painter.setFont(title_font)
+        painter.setPen(QtGui.QColor(248, 250, 252))
+        title_rect = QtCore.QRectF(card_x + 20, card_y + 24, card_w - 40, 36)
+        painter.drawText(title_rect, Qt.AlignmentFlag.AlignCenter, "🎥 Live Object Detection & Auto-Labeling")
+
+        # Subtitle
+        sub_font = QtGui.QFont("Segoe UI", 10)
+        painter.setFont(sub_font)
+        painter.setPen(QtGui.QColor(148, 163, 184))
+        sub_rect = QtCore.QRectF(card_x + 20, card_y + 62, card_w - 40, 24)
+        painter.drawText(sub_rect, Qt.AlignmentFlag.AlignCenter, "Real-Time AI Vision • Live Webcam & RTSP Stream • Spacebar Freeze-to-Label")
+
+        # Separator line
+        painter.setPen(QtGui.QPen(QtGui.QColor(71, 85, 105, 140), 1))
+        painter.drawLine(QtCore.QPointF(card_x + 40, card_y + 98), QtCore.QPointF(card_x + card_w - 40, card_y + 98))
+
+        # Action banner
+        banner_rect = QtCore.QRectF(card_x + 40, card_y + 115, card_w - 80, 52)
+        painter.setBrush(QtGui.QColor(16, 185, 129, 35))
+        painter.setPen(QtGui.QPen(QtGui.QColor(16, 185, 129, 180), 1.5))
+        painter.drawRoundedRect(banner_rect, 8, 8)
+
+        btn_font = QtGui.QFont("Segoe UI", 11, QtGui.QFont.Weight.DemiBold)
+        painter.setFont(btn_font)
+        painter.setPen(QtGui.QColor(52, 211, 153))
+        painter.drawText(banner_rect, Qt.AlignmentFlag.AlignCenter, "▶ Click [Start Live Camera] in Right Panel (or Ctrl+Shift+C)")
+
+        # Feature pills
+        pills_y = card_y + 185
+        pills_font = QtGui.QFont("Segoe UI", 9)
+        painter.setFont(pills_font)
+        painter.setPen(QtGui.QColor(226, 232, 240))
+        pills_rect = QtCore.QRectF(card_x + 20, pills_y, card_w - 40, 48)
+        pills_text = "⚡ Hardware: DirectML / CUDA / CPU  |  🎯 Models: YOLOv8 / YOLOv10 / SAM\n📸 Spacebar: Freeze Frame & Annotate  |  📁 Drag & drop image/video anytime"
+        painter.drawText(pills_rect, Qt.AlignmentFlag.AlignCenter, pills_text)
+
+        # Quick shortcuts footer
+        foot_y = card_y + card_h - 45
+        foot_font = QtGui.QFont("Segoe UI", 8)
+        painter.setFont(foot_font)
+        painter.setPen(QtGui.QColor(100, 116, 139))
+        foot_rect = QtCore.QRectF(card_x + 20, foot_y, card_w - 40, 28)
+        painter.drawText(foot_rect, Qt.AlignmentFlag.AlignCenter, "Ctrl+Shift+C: Live Camera Dock  •  Ctrl+O: Open File  •  Ctrl+U: Open Video  •  Help: Camera Guide (F1)")
+
+        painter.end()
+
     # QT Overload
     def paintEvent(self, event):  # noqa: C901
         """Paint event for canvas"""
@@ -3958,6 +4051,7 @@ class Canvas(
             or self.pixmap.height() == 0
         ):
             super().paintEvent(event)
+            self._paint_empty_state_hud()
             return
 
         p = self._painter

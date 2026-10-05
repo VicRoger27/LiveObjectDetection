@@ -2298,6 +2298,8 @@ class LabelingWidget(LabelDialog):
         self.tools = self.toolbar("Tools")
         # Menu buttons on Left
         self.actions.tool = (
+            toggle_live_camera,
+            None,
             # open_,
             opendir,
             open_next_image,
@@ -2325,7 +2327,6 @@ class LabelingWidget(LabelDialog):
             loop_select_labels,
             select_toggle_shapes,
             run_all_images,
-            toggle_live_camera,
             toggle_auto_labeling_widget,
             None,
             open_chatbot,
@@ -2528,6 +2529,25 @@ class LabelingWidget(LabelDialog):
         if not self.attributes:
             self.shape_attributes.hide()
             self.scroll_area.hide()
+
+        # Live Camera Service & Control Dock (Prominently placed at the top of right sidebar)
+        from anylabeling.services.camera.live_camera_service import LiveCameraService
+        from anylabeling.views.labeling.widgets.camera_control_dock import CameraControlDock
+
+        self.camera_service = LiveCameraService(self)
+        self.camera_dock = CameraControlDock(self.camera_service, self)
+        self.camera_dock.setVisible(True)
+        self.camera_dock.view_mode_changed.connect(self._on_camera_view_mode_changed)
+        self.camera_dock.freeze_snapshot_requested.connect(self._on_camera_freeze_snapshot)
+        self.camera_dock.model_quick_switched.connect(self._on_camera_model_quick_switched)
+        self.camera_service.frame_ready.connect(self._on_camera_frame_ready)
+        right_sidebar_layout.addWidget(self.camera_dock)
+
+        # Preload initial model if available
+        initial_model = self.camera_dock.model_combo.currentData()
+        if initial_model and initial_model != "active_anylabeling":
+            QtCore.QTimer.singleShot(150, lambda: self._on_camera_model_quick_switched(str(initial_model)))
+
         right_sidebar_layout.addWidget(
             self.shape_attributes, 0, Qt.AlignmentFlag.AlignCenter
         )
@@ -2554,20 +2574,6 @@ class LabelingWidget(LabelDialog):
         desc_panel_layout.setSpacing(0)
         desc_panel_layout.addWidget(description_header_widget)
         desc_panel_layout.addWidget(self.description_dock)
-
-        # Live Camera Service & Control Dock
-        from anylabeling.services.camera.live_camera_service import LiveCameraService
-        from anylabeling.views.labeling.widgets.camera_control_dock import CameraControlDock
-
-        self.camera_service = LiveCameraService(self)
-        self.camera_dock = CameraControlDock(self.camera_service, self)
-        self.camera_dock.setVisible(False)
-        self.camera_dock.view_mode_changed.connect(self._on_camera_view_mode_changed)
-        self.camera_dock.freeze_snapshot_requested.connect(self._on_camera_freeze_snapshot)
-        self.camera_dock.model_quick_switched.connect(self._on_camera_model_quick_switched)
-        self.camera_service.frame_ready.connect(self._on_camera_frame_ready)
-        right_sidebar_layout.addWidget(self.camera_dock)
-
         right_sidebar_layout.addWidget(desc_panel)
 
         right_sidebar_layout.addWidget(self.flag_dock)
@@ -6347,6 +6353,11 @@ class LabelingWidget(LabelDialog):
 
     # QT Overload
     def keyPressEvent(self, event):
+        if hasattr(self, "camera_service") and self.camera_service.is_running:
+            if event.key() == Qt.Key.Key_Space:
+                self._on_camera_freeze_snapshot()
+                event.accept()
+                return
         if event.key() == Qt.Key.Key_Escape:
             if self.image_tags_widget.cancel_active_mode():
                 event.accept()
@@ -7640,7 +7651,7 @@ class LabelingWidget(LabelDialog):
         if model_info == "active_anylabeling":
             if hasattr(self, "auto_labeling_widget") and self.auto_labeling_widget.model_manager.model:
                 self.camera_service.set_model(self.auto_labeling_widget.model_manager.model)
-                self.status(self.tr("Camera using active X-AnyLabeling model."))
+                self.status(self.tr("Camera using active studio model."))
         elif os.path.isfile(model_info):
             try:
                 from ultralytics import YOLO

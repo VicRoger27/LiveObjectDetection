@@ -86,13 +86,24 @@ class CameraControlDock(QtWidgets.QDockWidget):
         model_layout = QtWidgets.QVBoxLayout(model_group)
 
         self.model_combo = QtWidgets.QComboBox()
-        self.model_combo.addItem(self.tr("[Active X-AnyLabeling Model]"), "active_anylabeling")
+        self.model_combo.addItem(self.tr("[Active Studio Model]"), "active_anylabeling")
         # Add local models if found
         models_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "models"))
+        default_model_idx = -1
         if os.path.isdir(models_dir):
             for f in sorted(os.listdir(models_dir)):
                 if f.endswith((".pt", ".onnx")):
-                    self.model_combo.addItem(f"Local: {f}", os.path.join(models_dir, f))
+                    item_text = f"Local: {f}"
+                    item_path = os.path.join(models_dir, f)
+                    self.model_combo.addItem(item_text, item_path)
+                    if "yolov8n" in f.lower():
+                        default_model_idx = self.model_combo.count() - 1
+
+        if default_model_idx != -1:
+            self.model_combo.setCurrentIndex(default_model_idx)
+        elif self.model_combo.count() > 1:
+            self.model_combo.setCurrentIndex(1)
+
         self.model_combo.currentIndexChanged.connect(self._on_model_selected)
         model_layout.addWidget(self.model_combo)
 
@@ -122,15 +133,18 @@ class CameraControlDock(QtWidgets.QDockWidget):
         ctrl_layout = QtWidgets.QVBoxLayout(ctrl_group)
 
         btn_row1 = QtWidgets.QHBoxLayout()
-        self.btn_toggle_camera = QtWidgets.QPushButton(self.tr("Start Camera"))
+        self.btn_toggle_camera = QtWidgets.QPushButton(self.tr("▶ Start Live Camera"))
+        self.btn_toggle_camera.setMinimumHeight(38)
         self.btn_toggle_camera.setStyleSheet(
-            "QPushButton { background-color: #2e7d32; color: white; font-weight: bold; padding: 8px; border-radius: 4px; }"
-            "QPushButton:hover { background-color: #388e3c; }"
+            "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; font-weight: bold; font-size: 13px; padding: 8px; border-radius: 6px; border: 1px solid #059669; }"
+            "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #34d399, stop:1 #10b981); }"
+            "QPushButton:pressed { background-color: #047857; }"
         )
         self.btn_toggle_camera.clicked.connect(self._toggle_camera)
         btn_row1.addWidget(self.btn_toggle_camera)
 
         self.btn_pause = QtWidgets.QPushButton(self.tr("Pause"))
+        self.btn_pause.setMinimumHeight(38)
         self.btn_pause.setEnabled(False)
         self.btn_pause.clicked.connect(self._toggle_pause)
         btn_row1.addWidget(self.btn_pause)
@@ -254,10 +268,10 @@ class CameraControlDock(QtWidgets.QDockWidget):
         self.camera_service.auto_save_interval = val
 
     def _on_camera_started(self, w: int, h: int):
-        self.btn_toggle_camera.setText(self.tr("Stop Camera"))
+        self.btn_toggle_camera.setText(self.tr("⏹ Stop Live Camera"))
         self.btn_toggle_camera.setStyleSheet(
-            "QPushButton { background-color: #c62828; color: white; font-weight: bold; padding: 8px; border-radius: 4px; }"
-            "QPushButton:hover { background-color: #d32f2f; }"
+            "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ef4444, stop:1 #b91c1c); color: white; font-weight: bold; font-size: 13px; padding: 8px; border-radius: 6px; border: 1px solid #b91c1c; }"
+            "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #f87171, stop:1 #dc2626); }"
         )
         self.btn_pause.setEnabled(True)
         self.btn_pause.setText(self.tr("Pause"))
@@ -265,10 +279,11 @@ class CameraControlDock(QtWidgets.QDockWidget):
         self.lbl_resolution.setText(f"{w} x {h}")
 
     def _on_camera_stopped(self):
-        self.btn_toggle_camera.setText(self.tr("Start Camera"))
+        self.btn_toggle_camera.setText(self.tr("▶ Start Live Camera"))
         self.btn_toggle_camera.setStyleSheet(
-            "QPushButton { background-color: #2e7d32; color: white; font-weight: bold; padding: 8px; border-radius: 4px; }"
-            "QPushButton:hover { background-color: #388e3c; }"
+            "QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #10b981, stop:1 #059669); color: white; font-weight: bold; font-size: 13px; padding: 8px; border-radius: 6px; border: 1px solid #059669; }"
+            "QPushButton:hover { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #34d399, stop:1 #10b981); }"
+            "QPushButton:pressed { background-color: #047857; }"
         )
         self.btn_pause.setEnabled(False)
         self.btn_pause.setText(self.tr("Pause"))

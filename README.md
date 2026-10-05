@@ -1,180 +1,148 @@
-<div align="center">
-  <p>
-    <a href="https://github.com/CVHub520/X-AnyLabeling/" target="_blank">
-      <img alt="X-AnyLabeling" height="200px" src="anylabeling/resources/images/logo.png"></a>
-  </p>
+# 🎥 LiveObjectDetection
 
-[English](README.md) | [简体中文](README_zh-CN.md)
+<div align="center">
+
+### **High-Performance Real-Time Camera Object Detection, Tracking & AI Annotation Suite**
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](./LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-aff.svg)](https://www.python.org/)
+[![Platform: Windows](https://img.shields.io/badge/platform-windows%20x64-0078d7.svg)](https://github.com/VicRoger27/LiveObjectDetection)
+[![Hardware: DirectML | CUDA | CPU](https://img.shields.io/badge/hardware-DirectML%20%7C%20CUDA%20%7C%20CPU-10b981.svg)](https://github.com/VicRoger27/LiveObjectDetection)
+
+[**Features**](#-key-features) •
+[**Quick Start**](#-quick-start) •
+[**Live Camera Controls**](#-live-camera-pipeline--shortcuts) •
+[**Hardware Acceleration**](#-hardware-acceleration) •
+[**Model Zoo**](#-model-zoo) •
+[**Offline Help**](#-offline-documentation)
 
 </div>
 
-<p align="center">
-    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg"></a>
-    <a href="https://github.com/CVHub520/X-AnyLabeling/releases/latest"><img src="https://img.shields.io/github/v/release/CVHub520/X-AnyLabeling?color=ffa"></a>
-    <a href="https://pypi.org/project/x-anylabeling-cvhub/"><img src="https://img.shields.io/pypi/v/x-anylabeling-cvhub?logo=pypi&logoColor=white"></a>
-    <a href="./pyproject.toml"><img src="https://img.shields.io/badge/python-3.11+-aff.svg"></a>
-    <a href="https://github.com/CVHub520/X-AnyLabeling/releases/latest"><img src="https://img.shields.io/badge/os-linux%2C%20win%2C%20mac-pink.svg"></a>
-    <a href="https://github.com/CVHub520/X-AnyLabeling/releases"><img src="https://img.shields.io/github/downloads/CVHub520/X-AnyLabeling/total?label=downloads"></a>
-    <a href="https://modelscope.cn/collections/X-AnyLabeling-7b0e1798bcda43"><img src="https://img.shields.io/badge/modelscope-X--AnyLabeling-6750FF?link=https%3A%2F%2Fmodelscope.cn%2Fcollections%2FX-AnyLabeling-7b0e1798bcda43"></a>
-</p>
+---
 
-<img src="https://github.com/user-attachments/assets/aa819dae-e38c-4b1c-a4a7-53a873d870e3" alt="X-AnyLabeling interface" width="100%" />
+## 🌟 Overview
 
-<p align="center">
-  <a href="https://xanylabeling.com/docs/x-anylabeling/point_cloud" target="_blank"><img src="assets/resources/pointcloud/pointcloud-3d-det.png" alt="3D Point Cloud Detection" width="50%" /></a><a href="https://xanylabeling.com/docs/x-anylabeling/point_cloud" target="_blank"><img src="assets/resources/pointcloud/pointcloud-3d-seg.png" alt="3D Point Cloud Segmentation" width="50%" /></a>
-<br />
-  <img src="assets/resources/pointcloud/pointcloud-captions-en.svg" alt="Left: 3D Point Cloud Detection; right: 3D Point Cloud Segmentation" width="100%" />
-</p>
+**LiveObjectDetection** combines the real-time camera detection workflow and HUD overlay inspired by [TorchObjectDetection](https://github.com/hasnocool/TorchObjectDetection) with the comprehensive deep learning model zoo, dataset annotation studio, and hardware acceleration from [X-AnyLabeling](https://github.com/CVHub520/X-AnyLabeling).
 
-## 🥳 What's New
+Unlike traditional labeling tools that only work with static image files, **LiveObjectDetection** connects directly to your webcams, capture cards, and RTSP network streams to deliver real-time AI object detection, live telemetry diagnostics, and a seamless **Freeze-to-Label (Spacebar)** workflow for instant dataset creation.
 
-- `2026-10-01`: Add [3D point cloud annotation](./docs/en/point_cloud.md), supporting 3D point cloud detection and segmentation.
-- `2026-08-19`: Add support for [image tagging](https://xanylabeling.com/docs/x-anylabeling/user_guide#37-image-tags), with tag creation, editing, reordering, and batch deletion.
-- `2026-08-12`: Add support for [D-FINE-seg](https://github.com/ArgoHA/D-FINE-seg) instance segmentation models.
-- `2026-08-08`: Add support for the [RT-DETRv2-OBB](https://xanylabeling.com/examples/detection/obb) rotated object detection model.
-- `2026-08-08`: Add the [Magic Wand tool](https://xanylabeling.com/docs/x-anylabeling/user_guide#21-creating-shapes) for quickly creating polygons from contiguous color regions.
-- `2026-08-05`: Release [X-AnyLabeling v4.0.0](https://mp.weixin.qq.com/s/RUb8ge-_7br0YeIImuK6YQ).
-- For more details, please refer to the [CHANGELOG](./CHANGELOG.md)
+---
 
-## Introduction
+## 🚀 Key Features
 
-**X-AnyLabeling** is a lightweight, efficient, and unified cross-platform desktop application for AI-assisted annotation of text, image, video, point cloud, and multimodal data. It combines versatile built-in tools, automated labeling workflows, state-of-the-art deep learning models, and flexible multi-format import and export. For remote inference, [X-AnyLabeling-Server](https://github.com/CVHub520/X-AnyLabeling-Server) provides a lightweight, extensible backend for connecting custom models and compute resources.
+- 🖥️ **Zero-Python Desktop Experience**:
+  Run directly via the pre-built multi-file application (`LiveAnyLabeling.exe`) or install system-wide with the installer (`LiveAnyLabeling_Setup.exe`) — no Python environment required.
 
-## Key Features
+- 📹 **Real-Time Live Camera Inference**:
+  Connect to USB webcams, virtual cameras, or RTSP/HTTP network video streams. Runs high-efficiency multi-threaded inference at 30–60+ FPS.
 
-<img src="https://github.com/user-attachments/assets/2925bc88-e22b-4e81-873c-45fd85164f6b" width="100%" />
+- 🎛️ **3 Dynamic Viewing Modes**:
+  1. **Integrated Canvas Mode**: Detections are rendered smoothly onto the primary interactive annotation workspace.
+  2. **Continuous Monitor HUD Mode**: A transparent diagnostic telemetry HUD displays real-time Camera FPS, Inference Latency (ms), Video Resolution, and Detected Object Count.
+  3. **Dual-Pane Mode**: Side-by-side split screen comparing raw camera capture with the AI-detected output.
 
-* Unified support for annotating and processing text, image, video, point cloud, and multimodal data.
-* Covers tasks such as 2D image classification, object detection, instance segmentation, pose estimation, oriented object detection, multi-object tracking, optical character recognition, lane annotation, image captioning, visual question answering, document parsing, and 3D point clouds.
-* Provides polygons, rectangles, cuboids, rotated boxes, quadrilaterals, circles, lines, polylines, points, masks, and task-specific tools for text detection, text recognition, and KIE.
-* Integrates a wide range of state-of-the-art deep learning models for AI-assisted annotation, automated labeling, and batch dataset prediction.
-* Supports both local and remote inference through engines and serving frameworks such as `ONNX Runtime`, `TensorRT`, `OpenCV DNN`, `vLLM`, and `SGLang`.
-* Supports importing and exporting formats such as `COCO`, `VOC`, `YOLO`, `DOTA`, `MOT`, `MASK`, `PPOCR`, `MMGD`, `VLM-R1`, and `ShareGPT`.
-* Runs on Windows, Linux, and macOS, with interfaces available in English, Simplified Chinese, Japanese, and Korean.
-* Supports custom model integration, flexible extension, and secondary development.
+- 📸 **Spacebar Freeze-to-Label**:
+  Hit `Spacebar` or click **Freeze / Snapshot to Label** while the camera is streaming to instantly pause the current frame and convert all live detections into editable bounding boxes or polygons on the canvas.
 
-## Model library
+- ⚡ **Resolution Presets**:
+  Supports Native, 720p HD, 1080p FHD (1920x1080), 2K QHD (2560x1440), and 4K UHD (3840x2160) streaming with decoupled capture and inference pipelines.
 
-| **Task Category** | **Supported Models** |
-| :--- | :--- |
-| 🖼️ Image Classification | YOLOv5-Cls, YOLOv8-Cls, YOLO11-Cls, InternImage, PULC |
-| 🎯 Object Detection | YOLOv5/6/7/8/9/10, YOLO11/12/26, YOLOX, YOLO-NAS, D-FINE, DAMO-YOLO, Gold_YOLO, RT-DETR, RF-DETR, DEIMv2 |
-| 🖌️ Instance Segmentation | YOLOv5-Seg, YOLOv8-Seg, YOLO11-Seg, YOLO26-Seg, Hyper-YOLO-Seg, RF-DETR-Seg, D-FINE-seg |
-| 🎨 Semantic Segmentation | U-Net |
-| 🏃 Pose Estimation | YOLOv8-Pose, YOLO11-Pose, YOLO26-Pose, DWPose, RTMO |
-| 😀 Face Estimation | SCRFD, YOLOv6Lite-Face |
-| 👣 Tracking | TrackTrack, Bot-SORT, ByteTrack, SAM2/3-Video |
-| 🔄 Rotated Object Detection | YOLOv5-Obb, YOLOv8-Obb, YOLO11-Obb, YOLO26-Obb, RT-DETRv2-OBB |
-| 📏 Depth Estimation | Depth Anything |
-| 🧩 Segment Anything | SAM 1/2/3, SAM-HQ, SAM-Med2D, EdgeSAM, EfficientViT-SAM, MobileSAM |
-| ✂️ Image Matting | RMBG 1.4/2.0 |
-| 💡 Proposal | UPN |
-| 🏷️ Tagging | RAM, RAM++ |
-| 📄 OCR | PP-OCRv4, PP-OCRv5, PP-OCRv6 |
-| 🧾 Layout Analysis | PP-DocLayoutV3 |
-| 📑 Document Parsing | PaddleOCR-VL, PaddleOCR-VL-1.6 |
-| 🗣️ Vision Foundation Models | Rex-Omni, Florence2 |
-| 👁️ Vision Language Models | Qwen3-VL, Gemini, ChatGPT, GLM |
-| 🛣️ Lane Detection | CLRNet |
-| 🔢 Object Counting | CountGD, GeCO, GeCo2 |
-| 📍 Grounding | Grounding DINO, YOLO-World, YOLOE, SAM 3, LocateAnything |
-| 📚 Other | 👉 [model_zoo](./docs/en/model_zoo.md) 👈 |
+- 🛠️ **1-Click Hardware Acceleration Manager**:
+  A built-in Voicebox-style runtime selector (`Camera` > `Hardware Acceleration Manager...`) that allows 1-click downloads and switching between **CPU**, **DirectML** (works on AMD Radeon, Intel Arc, and NVIDIA GPUs), and **CUDA** acceleration.
 
-## Docs
+- 🧠 **Pre-Loaded Model Zoo**:
+  Comes bundled with ready-to-run YOLO models in the `models/` directory:
+  - `yolov8n.pt` (Ultra-fast, preloaded by default)
+  - `yolov10s.pt`, `yolov10m.pt`, `yolov10b.pt`
+  - `yolov9c.pt`
+  - Seamless support for YOLO11, RT-DETR, Segment Anything (SAM 2), MobileSAM, GroundingDINO, YOLO-World, and custom ONNX/PyTorch models.
 
-0. [Remote Inference Service](https://github.com/CVHub520/X-AnyLabeling-Server)
-1. [Installation & Quickstart](./docs/en/get_started.md)
-2. [Usage](./docs/en/user_guide.md)
-3. [Command Line Interface](./docs/en/cli.md)
-4. [Customize a model](./docs/en/custom_model.md)
-5. [Chatbot](./docs/en/chatbot.md)
-6. [VQA](./docs/en/vqa.md)
-7. [Image Classifier](./docs/en/image_classifier.md)
-8. [Video Classifier](./docs/en/video_classifier.md)
-9. [Document Parsing and Intelligent Text Recognition](./docs/en/paddle_ocr.md)
-10. [3D Point Cloud Annotation](./docs/en/point_cloud.md)
+- 📁 **Universal Dataset Import & Export**:
+  Export annotated datasets directly to **YOLO**, **COCO**, **VOC Pascal**, **LabelMe**, **DOTA**, **MOT**, and **XLABEL** formats.
 
-## Examples
+---
 
-- [Classification](./examples/classification/)
-  - [Image-Level](./examples/classification/image-level/README.md)
-  - [Shape-Level](./examples/classification/shape-level/README.md)
-- [Detection](./examples/detection/)
-  - [HBB Object Detection](./examples/detection/hbb/README.md)
-  - [OBB Object Detection](./examples/detection/obb/README.md)
-- [Segmentation](./examples/segmentation/README.md)
-  - [Instance Segmentation](./examples/segmentation/instance_segmentation/)
-  - [Binary Semantic Segmentation](./examples/segmentation/binary_semantic_segmentation/)
-  - [Multiclass Semantic Segmentation](./examples/segmentation/multiclass_semantic_segmentation/)
-- [Description](./examples/description/)
-  - [Tagging](./examples/description/tagging/README.md)
-  - [Captioning](./examples/description/captioning/README.md)
-- [Estimation](./examples/estimation/)
-  - [Face Estimation](./examples/estimation/face_estimation/README.md)
-  - [Pose Estimation](./examples/estimation/pose_estimation/README.md)
-  - [Depth Estimation](./examples/estimation/depth_estimation/README.md)
-- [OCR](./examples/optical_character_recognition/)
-  - [Text Recognition](./examples/optical_character_recognition/text_recognition/)
-  - [Key Information Extraction](./examples/optical_character_recognition/key_information_extraction/README.md)
-- [MOT](./examples/multiple_object_tracking/README.md)
-  - [Tracking by HBB Object Detection](./examples/multiple_object_tracking/README.md)
-  - [Tracking by OBB Object Detection](./examples/multiple_object_tracking/README.md)
-  - [Tracking by Instance Segmentation](./examples/multiple_object_tracking/README.md)
-  - [Tracking by Pose Estimation](./examples/multiple_object_tracking/README.md)
-- [iVOS](./examples/interactive_video_object_segmentation)
-  - [SAM2-Video](./examples/interactive_video_object_segmentation/sam2/README.md)
-  - [SAM3-Video](./examples/interactive_video_object_segmentation/sam3/README.md)
-- [Matting](./examples/matting/)
-  - [Image Matting](./examples/matting/image_matting/README.md)
-- [Vision-Language](./examples/vision_language/)
-  - [Rex-Omni](./examples/vision_language/rexomni/README.md)
-  - [Florence 2](./examples/vision_language/florence2/README.md)
-- [Counting](./examples/counting/)
-  - [GeCo](./examples/counting/geco/README.md)
-  - [GeCo2](./examples/counting/geco2/README.md)
-- [Grounding](./examples/grounding/)
-  - [YOLOE](./examples/grounding/yoloe/README.md)
-  - [SAM 3](./examples/grounding/sam3/README.md)
-  - [LocateAnything](./examples/grounding/locateanything/README.md)
-- [Training](./examples/training/)
-  - [Ultralytics](./examples/training/ultralytics/README.md)
+## 📦 Quick Start
 
-## Contribute
+### Option 1: Run Pre-Built Windows Executable (No Python Required)
 
-We believe in open collaboration! **X‑AnyLabeling** continues to grow with the support of the community. Whether you're fixing bugs, improving documentation, or adding new features, your contributions make a real impact.
+1. Clone or download this repository.
+2. Launch `LiveAnyLabeling.exe` directly from the root directory, or run `LiveAnyLabeling_Setup.exe` to install it into your Windows Start Menu and Desktop.
+3. The **Live Camera & Object Detection** panel is immediately open on the right:
+   - Select your camera device (Camera 0 is selected by default).
+   - Select your detection model (e.g. `Local: yolov8n.pt`).
+   - Click the green **▶ Start Live Camera** button or press `Ctrl+Shift+C`.
 
-To get started, please read our [Contributing Guide](./CONTRIBUTING.md) and make sure to agree to the [Contributor License Agreement (CLA)](./CLA.md) before submitting a pull request.
+### Option 2: Run from Source
 
-If you find this project helpful, please consider giving it a ⭐️ star! Have questions or suggestions? Open an [issue](https://github.com/CVHub520/X-AnyLabeling/issues) or email us at cv_hub@163.com.
+```powershell
+# Clone the repository
+git clone https://github.com/VicRoger27/LiveObjectDetection.git
+cd LiveObjectDetection
 
-A huge thank you 🙏 to everyone helping to make X‑AnyLabeling better.
+# Create and activate a Python virtual environment
+python -m venv .venv
+.venv\Scripts\activate
 
-## License
+# Install dependencies
+pip install -r requirements.txt
 
-This project is licensed under the [GNU General Public License v3.0](./LICENSE). You may use, modify, and redistribute the software, including for commercial purposes, provided that you comply with the terms of the license.
-
-## Sponsor
-
-Your [sponsorship](https://xanylabeling.com/sponsor) supports X-AnyLabeling's feature development, model integration, documentation, and community maintenance.
-
-## Acknowledgement
-
-I extend my heartfelt thanks to the developers and contributors of [AnyLabeling](https://github.com/vietanhdev/anylabeling), [LabelMe](https://github.com/wkentaro/labelme), [LabelImg](https://github.com/tzutalin/labelImg), [roLabelImg](https://github.com/cgvict/roLabelImg), [PPOCRLabel](https://github.com/PFCCLab/PPOCRLabel) and [CVAT](https://github.com/opencv/cvat), whose work has been crucial to the success of this project.
-
-## Citing
-
-If you use this software in your research, please cite it as below:
-
-```
-@misc{X-AnyLabeling,
-  year = {2023},
-  author = {Wei Wang},
-  publisher = {Github},
-  organization = {CVHub},
-  journal = {Github repository},
-  title = {X-AnyLabeling: A Unified Desktop Platform for AI-Assisted Data Annotation},
-  howpublished = {\url{https://github.com/CVHub520/X-AnyLabeling}}
-}
+# Launch LiveObjectDetection
+python -m anylabeling.app
 ```
 
-<div align="center"><a href="#top">🔝 Back to Top</a></div>
+---
+
+## ⌨️ Live Camera Pipeline & Shortcuts
+
+| Shortcut | Action | Description |
+| :--- | :--- | :--- |
+| `Ctrl+Shift+C` | **Toggle Live Camera** | Opens / closes the camera control dock and stream |
+| `Spacebar` | **Freeze Snapshot** | Freezes live video frame and loads detections onto canvas |
+| `Ctrl+O` | **Open Image/Label** | Open static image or existing annotation |
+| `Ctrl+U` | **Open Video** | Open local video file for sequential labeling |
+| `Ctrl+S` | **Save Annotation** | Save current annotation to disk |
+| `F1` | **Camera Guide** | Opens the built-in offline Live Camera HTML user guide |
+
+---
+
+## ⚡ Hardware Acceleration
+
+Navigate to **Camera** > **Hardware Acceleration Manager...** in the top menu to view and configure your active inference runtime:
+
+- **CPU Mode**: Safe universal fallback, compatible with any x86_64 processor.
+- **DirectML Mode**: High-performance DirectX 12 hardware acceleration across **AMD Radeon**, **Intel Arc / Iris Xe**, and **NVIDIA GeForce** graphics cards.
+- **CUDA Mode**: Dedicated NVIDIA Tensor Core GPU acceleration for maximum throughput.
+
+---
+
+## 🧠 Model Zoo
+
+The application detects local `.pt` and `.onnx` models stored in the root `models/` directory automatically. You can switch models on the fly from the camera control dock without restarting the stream:
+
+- `models/yolov8n.pt` — Nano detector for extreme framerates (60+ FPS).
+- `models/yolov10s.pt` / `yolov10m.pt` / `yolov10b.pt` — State-of-the-art NMS-free YOLOv10 detectors.
+- `models/yolov9c.pt` — High-accuracy YOLOv9 model.
+- **Custom Models**: Drop any custom PyTorch (`.pt`) or ONNX (`.onnx`) model into the `models/` directory, and it will appear in the **Detection Model** dropdown.
+
+---
+
+## 📖 Offline Documentation
+
+The app includes standalone, rich HTML guides accessible directly from the **Help** menu:
+- `help_camera.html`: Live Camera Quickstart, resolution tuning, RTSP setup, and freeze-to-label guide.
+- `help_en.html`: Complete user manual for annotation shapes, auto-labeling, and dataset conversion.
+
+---
+
+## 🤝 Acknowledgements
+
+- [TorchObjectDetection](https://github.com/hasnocool/TorchObjectDetection) — Concept and foundation for real-time live PyTorch camera detection.
+- [X-AnyLabeling](https://github.com/CVHub520/X-AnyLabeling) — Core annotation engine and multi-modal architecture.
+- [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) — Deep learning object detection models.
+
+---
+
+## 📄 License
+
+This project is licensed under the [GNU General Public License v3.0](./LICENSE).

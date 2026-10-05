@@ -1,58 +1,38 @@
-__appname__ = "X-AnyLabeling"
-__appdescription__ = "A lightweight, efficient, and unified cross-platform desktop application for AI-assisted annotation of text, image, video, and multimodal data."
-__version__ = "4.1.0"
-__url__ = "https://xanylabeling.com"
+__appname__ = "LiveObjectDetection"
+__appdescription__ = "High-performance real-time camera object detection, live tracking, and AI annotation studio powered by PyTorch, ONNX, DirectML, and YOLO/RT-DETR/SAM model zoos."
+__version__ = "1.0.0"
+__url__ = "https://github.com/VicRoger27/LiveObjectDetection"
 
 CLI_HELP_MSG = """
-    Usage: xanylabeling [COMMAND] [OPTIONS]
+    Usage: liveobjectdetection [COMMAND] [OPTIONS]
 
     Available Commands:
         help              Show this help message
-        checks            Display system and package information
+        checks            Display system, camera and package information
         version           Show version information
         config            Show config file path
         convert           Run conversion tasks
 
     Launch Options:
-        xanylabeling                                    Launch the GUI application
-        xanylabeling --filename IMAGE                   Open specific image/folder
-        xanylabeling --output DIR                       Set output directory
-        xanylabeling --config FILE                      Use custom config file
-        xanylabeling --reset-config                     Reset Qt config
-        xanylabeling --qt-image-allocation-limit 1024  Set Qt image allocation limit to 1024 MB
+        liveobjectdetection                                Launch the GUI application
+        liveobjectdetection --filename IMAGE/VIDEO         Open specific image or video
+        liveobjectdetection --output DIR                   Set output directory
+        liveobjectdetection --config FILE                  Use custom config file
+        liveobjectdetection --reset-config                 Reset Qt config
+        liveobjectdetection --qt-image-allocation-limit 1024  Set Qt image allocation limit to 1024 MB
 
     Conversion Tasks:
-        xanylabeling convert                            List all conversion tasks
-        xanylabeling convert --task <task>              Show help for a specific task
-        xanylabeling convert --task <task> [options]    Run conversion
+        liveobjectdetection convert                        List all conversion tasks
+        liveobjectdetection convert --task <task>          Show help for a specific task
+        liveobjectdetection convert --task <task> [opts]   Run conversion
 
-    Examples:
-        1. Launch the app:
-            xanylabeling
+    Features:
+        - Real-Time Live Webcam & RTSP Object Detection
+        - Integrated Canvas, Continuous Monitor HUD, and Dual-Pane Modes
+        - Freeze-to-Label (Spacebar) for instant dataset annotation
+        - 1-Click Hardware Acceleration Manager (CPU / DirectML / CUDA)
 
-        2. Open an image:
-            xanylabeling --filename /path/to/image.jpg
-
-        3. Check system information:
-            xanylabeling checks
-
-        4. Show version:
-            xanylabeling version
-
-        5. List all conversion tasks:
-            xanylabeling convert
-
-        6. Show help for a conversion task:
-            xanylabeling convert --task yolo2xlabel
-
-        7. Convert YOLO to XLABEL:
-            xanylabeling convert --task yolo2xlabel --mode detect --images ./images --labels ./labels --output ./output --classes classes.txt
-
-    For more options, use: xanylabeling --help
-
-    Docs: https://xanylabeling.com/docs/x-anylabeling/get_started
-    Tasks: https://xanylabeling.com/examples
-    GitHub: https://github.com/CVHub520/X-AnyLabeling
+    GitHub: https://github.com/VicRoger27/LiveObjectDetection
 """
 
 
