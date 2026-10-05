@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Camera & High-FPS Streaming Tutorial</title>
+<style>
+  :root {
+    --bg-primary: #12141a;
+    --bg-secondary: #1a1e28;
+    --bg-card: #222736;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  h1 { font-size: 2.2rem; color: #10b981; margin: 0 0 8px 0; }
+  .subtitle { font-size: 1.1rem; color: var(--text-secondary); }
+  h2 { color: #34d399; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-top: 36px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .card h4 { margin-top: 0; color: #6ee7b7; }
+  code { background: var(--bg-secondary); color: #f43f5e; padding: 2px 6px; border-radius: 4px; font-family: Consolas, monospace; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; }
+  th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; }
+  th { background: var(--bg-card); color: #6ee7b7; }
+  .nav-tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+  .nav-tabs a { color: var(--text-primary); text-decoration: none; background: var(--bg-secondary); padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border); font-weight: 500; }
+  .nav-tabs a:hover { border-color: var(--accent-green); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="nav-tabs">
+    <a href="help_en.html">📘 General User Guide</a>
+    <a href="help_camera.html" style="border-color: var(--accent-green);">📷 Live Camera & High-FPS Tutorial</a>
+  </div>
+
+  <header>
+    <h1>Camera Setup & High-FPS Streaming Tutorial</h1>
+    <div class="subtitle">Optimizing Cameras, RTSP Streams, Resolution Presets, and Multi-Threaded Inference</div>
+  </header>
+
+  <h2>1. Supported Video Sources</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h4>USB & Built-in Webcams</h4>
+      <p>Supports indices <code>0</code>, <code>1</code>, <code>2</code>, etc. Click the <b>Scan</b> button in the Camera Dock to auto-discover all connected cameras.</p>
+    </div>
+    <div class="card">
+      <h4>RTSP / IP Security Cameras</h4>
+      <p>Enter any RTSP stream in the <b>Stream URL</b> field, e.g. <code>rtsp://admin:password@192.168.1.100:554/stream1</code>.</p>
+    </div>
+    <div class="card">
+      <h4>HTTP / MJPEG & Video Files</h4>
+      <p>Supports live HTTP streams, screen virtual cameras (OBS Virtual Camera), or path to local <code>.mp4</code> video files.</p>
+    </div>
+  </div>
+
+  <h2>2. Resolution Presets & Bandwidth</h2>
+  <table>
+    <tr><th>Preset</th><th>Resolution</th><th>Best For</th></tr>
+    <tr><td><b>4K UHD</b></td><td>3840 &times; 2160</td><td>Maximum detail, large studio cameras, high-precision detection.</td></tr>
+    <tr><td><b>2K QHD</b></td><td>2560 &times; 1440</td><td>Wide-angle workspace surveillance and high-DPI displays.</td></tr>
+    <tr><td><b>1080p FHD</b></td><td>1920 &times; 1080</td><td><b>Recommended</b> &bull; Perfect balance of crisp visual quality and 30-60 FPS performance.</td></tr>
+    <tr><td><b>720p HD</b></td><td>1280 &times; 720</td><td>Older USB 2.0 webcams or lower CPU systems.</td></tr>
+    <tr><td><b>Device Native Max</b></td><td>Sensor Max</td><td>Automatically negotiates the camera's highest uncompressed resolution.</td></tr>
+  </table>
+
+  <h2>3. High-FPS Architecture: How Decoupled Threads Work</h2>
+  <p>Unlike standard detection apps that stutter when running heavy AI models, this suite uses a decoupled multi-threaded pipeline:</p>
+  <ul>
+    <li><b>Capture Thread</b>: Pulls raw frames from hardware at the camera's full native refresh rate (30 to 60+ FPS) without dropping frames.</li>
+    <li><b>Inference Thread</b>: Processes incoming frames with the active neural network asynchronously.</li>
+    <li><b>UI Thread</b>: Renders smoothly in Qt, so zooming, panning, and interacting with controls never stutters.</li>
+  </ul>
+
+  <h2>4. Automated Interval Auto-Saving</h2>
+  <p>In the Camera Control Dock, enable <b>Auto-Save Every:</b> and set an interval (e.g. <code>2.0 s</code>):</p>
+  <ul>
+    <li>The system automatically writes the frame to disk alongside a corresponding JSON annotation file with detected boxes and labels.</li>
+    <li>Ideal for unattended dataset collection (e.g. collecting training data of parts on a conveyor, cars passing, or gestures).</li>
+  </ul>
+
+  <footer style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.9em;">
+    Live Object Detection Suite &bull; Built on X-AnyLabeling & Ultralytics &bull; Desktop Native Edition
+  </footer>
+</div>
+
+</body>
+</html>

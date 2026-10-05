@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Object Detection & Auto-Labeling Suite - User Guide</title>
+<style>
+  :root {
+    --bg-primary: #12141a;
+    --bg-secondary: #1a1e28;
+    --bg-card: #222736;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --accent-purple: #8b5cf6;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  h1 {
+    font-size: 2.2rem;
+    color: var(--accent-blue);
+    margin: 0 0 8px 0;
+  }
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+  }
+  h2 {
+    color: #60a5fa;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-top: 36px;
+  }
+  h3 {
+    color: #e2e8f0;
+    margin-top: 24px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .badge-blue { background: #1e3a8a; color: #93c5fd; }
+  .badge-green { background: #064e3b; color: #6ee7b7; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .card h4 {
+    margin-top: 0;
+    color: #38bdf8;
+  }
+  code {
+    background: var(--bg-secondary);
+    color: #f43f5e;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    font-size: 0.9em;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+  th {
+    background: var(--bg-card);
+    color: #93c5fd;
+    font-weight: 600;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .nav-tabs a {
+    color: var(--text-primary);
+    text-decoration: none;
+    background: var(--bg-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .nav-tabs a:hover {
+    border-color: var(--accent-blue);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="nav-tabs">
+    <a href="help_en.html" style="border-color: var(--accent-blue);">📘 General User Guide</a>
+    <a href="help_camera.html">📷 Live Camera & High-FPS Tutorial</a>
+  </div>
+
+  <header>
+    <h1>Live Object Detection & Auto-Labeling Suite</h1>
+    <div class="subtitle">Complete Desktop Guide for Real-Time Vision, Model Zoo Inference & Instant Dataset Annotation</div>
+  </header>
+
+  <h2>1. Quick Start</h2>
+  <ol>
+    <li><b>Launch Application</b>: Double-click <code>LiveAnyLabeling.exe</code> or the desktop shortcut.</li>
+    <li><b>Open Camera Dock</b>: Click the green <b>Live Camera</b> button on the left toolbar or open <code>View -> Live Camera Dock</code>.</li>
+    <li><b>Select Camera & Resolution</b>: Choose <code>Camera 0</code> (or your external webcam) and select <b>1080p FHD</b> or <b>4K UHD</b>.</li>
+    <li><b>Select AI Model</b>: In the Model Zoo dropdown, choose any YOLO model (YOLOv8, YOLOv10, YOLO11, RT-DETR) or use one of the pre-loaded local models.</li>
+    <li><b>Start Streaming</b>: Click <b>Start Camera</b>. Real-time bounding boxes, labels, confidence scores, and telemetry will appear on the live feed!</li>
+  </ol>
+
+  <h2>2. The Three Viewing Modes</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h4>1. Integrated Canvas Mode</h4>
+      <p>Streams live video directly inside the primary annotation canvas. Allows instant <b>Freeze/Snapshot</b> to convert any live frame into editable polygon/bounding box annotations, plus optional automated interval saving.</p>
+    </div>
+    <div class="card">
+      <h4>2. Continuous Monitor HUD</h4>
+      <p>Clean, high-FPS surveillance and monitoring view with full on-screen telemetry (Camera FPS, Inference FPS, Latency in milliseconds), active class filter checklist, and fast model switching.</p>
+    </div>
+    <div class="card">
+      <h4>3. Dual-Pane (Side-by-Side)</h4>
+      <p>Displays the active camera feed in the left pane while keeping the frozen/captured editable annotation canvas on the right for simultaneous live monitoring and ground-truth dataset refinement.</p>
+    </div>
+  </div>
+
+  <h2>3. Freeze-to-Label Workflow</h2>
+  <p>Turn live video into high-quality training datasets in seconds:</p>
+  <ul>
+    <li>Press <kbd>Space</kbd> or click <b>📸 Freeze / Snapshot to Label</b> at any time.</li>
+    <li>The live frame pauses and all detected AI bounding boxes and polygons are instantly loaded into the shape list!</li>
+    <li>You can click and drag boxes, rename labels, add new shapes, or refine polygons.</li>
+    <li>Press <code>Ctrl + S</code> to save your annotations in <b>YOLO (.txt)</b>, <b>COCO (.json)</b>, or <b>Pascal VOC (.xml)</b> formats.</li>
+  </ul>
+
+  <h2>4. Hardware Acceleration & Runtime Swapping</h2>
+  <p>Access the <b>Hardware Acceleration Manager</b> via <code>AI -> Runtime & Hardware Manager</code>:</p>
+  <table>
+    <tr><th>Provider</th><th>Hardware</th><th>Description</th></tr>
+    <tr><td><b>CPU</b></td><td>All PCs</td><td>Universal compatibility, no drivers needed.</td></tr>
+    <tr><td><b>DirectML</b></td><td>AMD, Intel Arc, NVIDIA</td><td>Standard hardware GPU acceleration via DirectX 12.</td></tr>
+    <tr><td><b>CUDA 12.x</b></td><td>NVIDIA RTX / GTX</td><td>Ultra-low latency inference for NVIDIA graphics cards.</td></tr>
+  </table>
+  <p>The manager offers 1-click installation to automatically install GPU acceleration packages without needing manual DLL copying or complex configuration.</p>
+
+  <h2>5. Useful Keyboard Shortcuts</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td><code>F1</code></td><td>Open this User Guide</td></tr>
+    <tr><td><code>Ctrl + C</code></td><td>Toggle Live Camera Feed</td></tr>
+    <tr><td><code>Space</code></td><td>Freeze / Snapshot Current Live Frame</td></tr>
+    <tr><td><code>Ctrl + S</code></td><td>Save Active Annotation File</td></tr>
+    <tr><td><code>Ctrl + O</code></td><td>Open Static Image File</td></tr>
+    <tr><td><code>Ctrl + U</code></td><td>Open Image Directory</td></tr>
+    <tr><td><code>Del</code></td><td>Delete Selected Shape</td></tr>
+  </table>
+
+  <footer style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.9em;">
+    Live Object Detection Suite &bull; Built on X-AnyLabeling & Ultralytics &bull; Desktop Native Edition
+  </footer>
+</div>
+
+</body>
+</html>
